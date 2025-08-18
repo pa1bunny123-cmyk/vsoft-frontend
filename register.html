@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Harsha Dairyfarm</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            /* background: url('register-bg.jpg') no-repeat center center fixed; */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .register-container {
+            background: #ffffff;
+            margin-top: 100px;
+            margin-bottom: 100px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+
+        .register-container h2 {
+            text-align: center;
+            color: black;
+            margin-bottom: 20px;
+            font-weight: bold;
+            margin-top: 80px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+            height: 40px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-position: right 10px center;
+            background-repeat: no-repeat;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #ed5db8, #e4ed2d);
+            /* background-color: #2c5f2d; */
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            /* background-color: #256422; */
+            background: linear-gradient(to left, #e4ed2d, #0ceb61);
+        }
+
+        .login {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .login a {
+            color: red;
+            text-decoration: none;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-container">
+        <h2>Customer Registration</h2>
+        <form id="registerForm">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" required />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" required pattern="[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                title="Email must start with a letter" />
+
+
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" maxlength="10" pattern="\d{10}"
+          title="Enter Exactly 10 digits" required />
+
+            <label for="course">Select Course</label>
+            <select id="course" required>
+                <option value="">-- Select Course --</option>
+                <option value="M.Tech">M.Tech</option>
+                <option value="B.Tech">B.Tech</option>
+                <option value="MBA">MBA</option>
+                <option value="MCA">MCA</option>
+            </select>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" required />
+            <div id="passwordMessage" style="display:none; font-size:14px; color:red; margin-bottom:10px;">
+                Password must be at least 8 characters, include uppercase, lowercase, number, and special symbol.
+            </div>
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" required />
+
+
+
+            <button type="submit">Register</button>
+        </form>
+        <p class="login">Already registered? <a href="login.html">Login here</a></p>
+    </div>
+
+    <script>
+
+        const form = document.getElementById("registerForm");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const course = document.getElementById("course").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            const allowedDomains = ["gmail.com", "yahoo.com", "outlook.com"];
+            const emailPattern = new RegExp(
+                `^[a-zA-Z0-9._%+-]+@(${allowedDomains.join("|").replace(/\./g, "\\.")})$`
+            );
+
+            if (!emailPattern.test(email)) {
+                alert(`❌ Email must be from: ${allowedDomains.join(", ")}`);
+                return;
+            }
+
+            const emailDomain = email.split("@")[1].toLowerCase();
+            if (!allowedDomains.includes(emailDomain)) {
+                alert(`❌ Only ${allowedDomains.join(", ")} are allowed.`);
+                return;
+            }
+
+            const strongPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+            if (!strongPattern.test(password)) {
+                alert("❌ Password is too weak! Please follow the strong password rules.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("❌ Passwords do not match!");
+                return;
+            }
+
+            const customers = JSON.parse(localStorage.getItem("customers")) || [];
+
+            const phoneExists = customers.some(user => user.phone === phone);
+            if (phoneExists) {
+                alert("❌ Phone number already registered!");
+                window.location.href = "./index.html";
+                return;
+            }
+
+            const newCustomer = { name, email, phone, course, password };
+            customers.push(newCustomer);
+            localStorage.setItem("customers", JSON.stringify(customers));
+
+            alert("✅ Registration Successful!");
+            window.location.href = "./index.html";
+        });
+    </script>
+
+
+    </script>
+</body>
+
+</html>

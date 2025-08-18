@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vsofts Solutions</title>
+
+  <!-- Bootstrap & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 70px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      text-decoration: none
+    }
+
+    /* Navbar Styling */
+    .navbar-nav {
+      display: flex;
+      gap: 5px;
+    }
+
+    .navbar-logo img {
+      height: 45px;
+      border: 2px solid #00c8ff;
+      border-radius: 8px;
+      padding: 3px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+    }
+    
+
+    .navbar-nav .nav-link {
+      margin-right: 10px;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      color: rgb(255, 254, 254);
+      font-weight: bold;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .navbar-nav .nav-link:hover {
+      background-color: #312b2b;
+      transform: scale(1.05);
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #fcda02;
+    }
+
+    .home         { background-color: #ff5100; }
+    .about        { background-color: #28a745; }
+    .btech        { background-color: #ffc107; color: black; }
+    .mtech        { background-color: #17a2b8; }
+    .mba          { background-color: #f53fa9; }
+    .mca          { background-color: #fd7e14; }
+    .internship   { background-color: #dc3545; }
+    .register-btn { background-color: #6f42c1; }
+
+    @media (max-width: 992px) {
+      .navbar-nav {
+        gap: 5px;
+        margin-top: 10px;
+      }
+
+      .navbar-nav .nav-link {
+        justify-content: flex-start;
+      }
+    }
+
+    /* Video Background */
+    .video-carousel {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      margin-top: -70px;
+      z-index: -1;
+    }
+
+    .video-carousel video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .video-carousel video.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .overlay-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      z-index: 2;
+      animation: fadeInUp 2s ease-out;
+    }
+
+    .overlay-content h1 {
+      font-size: 3.2rem;
+      font-weight: bold;
+    }
+
+    .overlay-content p {
+      font-size: 1.5rem;
+      margin-top: 12px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    /* Registration Modal */
+    .modal-content {
+      border-radius: 12px;
+      background-color: #fdfdfd;
+    }
+
+    .modal-header {
+      background-color: #6f42c1;
+      color: white;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .success-msg {
+      display: none;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Footer Styles */
+    .footer {
+      /* background: linear-gradient(120deg, #1e3c72, #2a5298, #1e3c72); */
+      background-color: rgb(6, 6, 6);
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease infinite;
+      color: white;
+      padding: 50px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .footer-section h3 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .footer-link {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #ffeb3b;
+
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .social-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .contact-icon {
+      margin-right: 10px;
+      color: #fff;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 40px;
+      color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Responsive Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-logo" href="./index.html">
+      <img src="https://raw.githubusercontent.com/kondamahesh1250/VSoftSolutions/refs/heads/main/images/logo.webp" alt="Logo">
+    </a>
+
+    <!-- Toggle Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLinks" aria-controls="navbarLinks" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Content -->
+    <div class="collapse navbar-collapse" id="navbarLinks">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a href="./index.html" class="nav-link home"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="./aboutus.html" class="nav-link about"><i class="fas fa-info-circle"></i> About Us</a>
+        </li>
+        <li class="nav-item dropdown">
+             <a class="nav-link  btech dropbtn" id="btechLink" href="./BtechProjects.html">
+            <i class="fas fa-graduation-cap"></i> B.Tech Projects
+          </a>
+
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link  mtech dropbtn" id="mtechLink" href="MtechProjects.html" >
+            <i class="fas fa-laptop-code"></i> M.Tech Projects
+          </a>
+          
+        </li>
+        <li class="nav-item">
+          <a href="./MBA-Projects.html" class="nav-link mba" id="mbaLink">
+            <i class="fas fa-briefcase"></i> MBA Projects</a>
+        </li>
+        <li class="nav-item">
+          <a href="./MCA.html" class="nav-link mca" id="mcaLink">
+            <i class="fas fa-desktop"></i> MCA Projects</a>
+        </li>
+        <li class="nav-item">
+  <a href="./Intership.html" class="nav-link internship" id="internshipLink">
+    <i class="fas fa-building"></i> Internships & Corporate
+  </a>
+</li>
+<li class="nav-item">
+          <a href="./register.html" class="nav-link register-btn"><i class="fas fa-user-plus"></i>Register</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a href="./Intership.html" class="nav-link internship"><i class="fas fa-building"></i> Internships&Corporate</a>
+        </li>
+        <li class="nav-item">
+          <a href="./login.html" class="nav-link register-btn"><i class="fas fa-user-plus"></i>Login</a>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Video Carousel -->
+<div class="video-carousel">
+  <video class="bg-video active" autoplay muted loop>
+    <source src="https://videos.pexels.com/video-files/3130284/3130284-uhd_2560_1440_30fps.mp4" type="video/mp4">
+  </video>
+  <video class="bg-video" autoplay muted loop>
+    <source src="https://videos.pexels.com/video-files/33193839/14146548_2560_1440_25fps.mp4" type="video/mp4">
+  </video>
+  <video class="bg-video" autoplay muted loop>
+    <source src="https://videos.pexels.com/video-files/6804109/6804109-uhd_2732_1440_25fps.mp4" type="video/mp4">
+  </video>
+  <div class="overlay-content">
+    <h1>Welcome to Vsofts Solutions</h1>
+    <p>We Build Your Career</p>
+  </div>
+</div>
+
+<!-- Registration Modal
+<div class="modal fade" id="registerModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content" id="registrationForm">
+      <div class="modal-header">
+        <h5 class="modal-title">Register</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3"><label class="form-label">Name</label><input type="text" class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Mobile</label><input type="tel" class="form-control" required pattern="[0-9]{10}"></div>
+        <div class="mb-3"><label class="form-label">Gmail</label><input type="email" class="form-control" required></div>
+        <div class="mb-3"><label class="form-label">Course</label>
+          <select class="form-select" id="course">
+            <option value="">Select</option><option value="btech">BTech</option><option value="mtech">MTech</option>
+          </select>
+        </div>
+        <div class="mb-3 subcourse-select" id="btech-sub" style="display:none;">
+          <label class="form-label">BTech Specialization</label>
+          <select class="form-select"><option>CSE</option><option>ECE</option><option>EEE</option><option>Civil</option><option>Mech</option></select>
+        </div>
+        <div class="mb-3 subcourse-select" id="mtech-sub" style="display:none;">
+          <label class="form-label">MTech Specialization</label>
+          <select class="form-select"><option>CSE</option><option>ECE</option><option>Power Systems</option><option>Structural</option></select>
+        </div>
+        <div class="success-msg" id="successMessage">🎉 Registration Successful!</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" type="submit">Submit</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </form>
+  </div>
+</div> -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>About Us</h3>
+      <p>We provide academic and industrial project solutions across various fields with training & mentoring.</p>
+      <!-- <div class="social-icons">
+        <a class="social-icon" style="background:#3b5998;"><i class="fab fa-facebook-f"></i></a>
+        <a class="social-icon" style="background:#1da1f2;"><i class="fab fa-twitter"></i></a>
+        <a class="social-icon" style="background:#e1306c;"><i class="fab fa-instagram"></i></a>
+        <a class="social-icon" style="background:#0077b5;"><i class="fab fa-linkedin-in"></i></a>
+        <a class="social-icon" style="background:#ff0000;"><i class="fab fa-youtube"></i></a>
+      </div> -->
+    </div>
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <p><a href="./index.html" class="footer-link">🏠 Home</a></p>
+      <p><a href="./aboutus.html" class="footer-link">ℹ️ About</a></p>
+      <p><a href="BtechProjects.html" id="footerBtechLink" class="footer-link">🎓 B.Tech Projcts</a></p>
+      <p><a href="./MtechProjects.html" id="footerMtechLink" class="footer-link">💻 M.Tech Projects</a></p>
+      <p><a href="./MBA-Projects.html" id="footerMbaLink" class="footer-link">💻 MBA Projects</a></p>
+      <p><a href="./MCA.html" id="footerMcaLink"  class="footer-link">💻 MCA Projects</a></p>
+      <p><a href="./login.html" id="footerInternshipLink" class="footer-link">🏢 Internships&Corporate</a></p>
+    </div>
+    <div class="footer-section">
+      <h3>Contact</h3>
+      <div class="contact-item"><i class="fas fa-home contact-icon"></i> Survey No. 64, Madhapur, Hyderabad</div>
+      <div class="contact-item"><i class="fas fa-phone contact-icon"></i> +91-9441927859</div>
+      <div class="contact-item"><i class="fas fa-envelope contact-icon"></i> info@VsoftsSolutions.in</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 Vsofts Solutions. All Rights Reserved.
+  </div>
+</footer>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const courseSelect = document.getElementById('course');
+  const btechSub = document.getElementById('btech-sub');
+  const mtechSub = document.getElementById('mtech-sub');
+  const form = document.getElementById('registrationForm');
+  const successMessage = document.getElementById('successMessage');
+  const registerBtn = document.querySelector('.register-btn');
+  const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+
+  registerBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    registerModal.show();
+  });
+
+  courseSelect.addEventListener('change', function () {
+    const value = this.value;
+    btechSub.style.display = value === 'btech' ? 'block' : 'none';
+    mtechSub.style.display = value === 'mtech' ? 'block' : 'none';
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    successMessage.style.display = 'block';
+    setTimeout(() => {
+      successMessage.style.display = 'none';
+      form.reset();
+      btechSub.style.display = 'none';
+      mtechSub.style.display = 'none';
+      bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+    }, 2000);
+  });
+
+  const videos = document.querySelectorAll('.bg-video');
+  let current = 0;
+  setInterval(() => {
+    videos[current].classList.remove('active');
+    current = (current + 1) % videos.length;
+    videos[current].classList.add('active');
+  }, 10000);
+</script>
+
+<script>
+    function protectLink(linkId, pageUrl) {
+    const link = document.getElementById(linkId);
+    if (link) {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            if (isLoggedIn) {
+                window.location.href = pageUrl;
+            } else {
+                localStorage.setItem("redirectAfterLogin", pageUrl);
+                window.location.href = "./login.html";
+            }
+        });
+    }
+}
+
+// Apply for both Navbar and Footer
+
+protectLink("btechLink", "BtechProjects.html");
+protectLink("footerBtechLink", "BtechProjects.html");
+
+protectLink("mtechLink", "MtechProjects.html");
+protectLink("footerMtechLink", "MtechProjects.html");
+
+protectLink("mbaLink", "MBA.html");
+protectLink("footerMbaLink", "MBA.html");
+
+protectLink("mcaLink", "MCA.html");
+protectLink("footerMcaLink", "MCA.html");
+
+protectLink("internshipLink", "Intership.html");
+protectLink("footerInternshipLink", "Intership.html");
+</script>
+
+<!-- <script>
+  document.getElementById("internshipLink").addEventListener("click", function (e) {
+    e.preventDefault();
+    let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      window.location.href = "./Intership.html";
+    } else {
+      localStorage.setItem("redirectAfterLogin", "./Intership.html");
+      window.location.href = "./login.html";
+    }
+  });
+
+  document.getElementById("mcaLink").addEventListener("click", function (e) {
+    e.preventDefault();
+    let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      window.location.href = "./MCA.html";
+    } else {
+      localStorage.setItem("redirectAfterLogin", "./MCA.html");
+      window.location.href = "./login.html";
+    }
+  });
+
+   document.getElementById("mbaLink").addEventListener("click", function (e) {
+    e.preventDefault();
+    let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      window.location.href = "./MBA-Projects.html";
+    } else {
+      localStorage.setItem("redirectAfterLogin", "./MBA-Projects.html");
+      window.location.href = "./login.html";
+    }
+  });
+
+  document.getElementById("mtechLink").addEventListener("click", function (e) {
+    e.preventDefault();
+    let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      window.location.href = "./MtechProjects.html";
+    } else {
+      localStorage.setItem("redirectAfterLogin", "./MtechProjects.html");
+      window.location.href = "./login.html";
+    }
+  });
+
+  document.getElementById("btechLink").addEventListener("click", function (e) {
+    e.preventDefault();
+    let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      window.location.href = "./BtechProjects.html";
+    } else {
+      localStorage.setItem("redirectAfterLogin", "./BtechProjects.html");
+      window.location.href = "./login.html";
+    }
+  });
+
+  
+</script> -->
+
+</body>
+</html>

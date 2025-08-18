@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Project Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    /* Navbar Styling */
+    .navbar-nav {
+      display: flex;
+      gap: 5px;
+    }
+
+    .navbar-logo img {
+      height: 45px;
+      border: 2px solid #00c8ff;
+      border-radius: 8px;
+      padding: 3px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+    }
+    
+
+    .navbar-nav .nav-link {
+      margin-right: 10px;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      color: rgb(255, 254, 254);
+      font-weight: bold;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .navbar-nav .nav-link:hover {
+      background-color: #312b2b;
+      transform: scale(1.05);
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #fcda02;
+    }
+
+    .home         { background-color: #ff5100; }
+    .about        { background-color: #28a745; }
+    .btech        { background-color: #ffc107; color: black; }
+    .mtech        { background-color: #17a2b8; }
+    .mba          { background-color: #f53fa9; }
+    .mca          { background-color: #fd7e14; }
+    .internship   { background-color: #dc3545; }
+    .register-btn { background-color: #6f42c1; }
+
+    @media (max-width: 992px) {
+      .navbar-nav {
+        gap: 5px;
+        margin-top: 10px;
+      }
+
+      .navbar-nav .nav-link {
+        justify-content: flex-start;
+      }
+    }
+
+    table {
+      width: 95vw;
+      border-collapse: collapse;
+      margin: 20px;
+      border: 2px solid;
+      /* background-color: #fff; */
+      background-color: rgb(63, 59, 59);
+      border: 2px solid #ccc;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border: 4px solid #ccc;
+      font-weight: 100;
+      color: white;
+      /* border: 2px solid; */
+      /* text-align: center; */
+    }
+
+    th {
+      text-align: center;
+      font-weight: bold;
+      color: white;
+      font-weight: bold;
+    }
+
+    td:hover{
+      color: rgb(225, 210, 41);
+      transform: translateX(15px);
+      cursor: pointer;
+    }
+
+    /* table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    } */
+
+
+    @media (max-width: 768px) {
+
+      table {
+        font-size: 14px;
+        overflow-x: auto;
+        display: block;
+      }
+    }
+
+    #title {
+      text-align: center;
+      padding: 20px;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-top: 2rem;
+      color: #333;
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      font-size: 2rem;
+      /* Responsive font size */
+      text-align: center;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background-color: #343a40;
+      transition: width 0.4s ease-in-out;
+    }
+
+    .section-title:hover::after {
+      width: 100%;
+    }
+
+    .top-content {
+      width: 100%;
+      height: auto;
+      min-height: 25vh;
+      margin-top: 50px;
+      border-radius: 10px;
+      background-color: #969ca2;
+      padding: 2rem 1rem;
+      display: flex;
+      align-items: center;
+      background-image: url("./img17.avif");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+    }
+
+    .top-content h2 {
+      font-size: 1.8rem;
+      margin-top: 60px;
+      color: #fff;
+    }
+
+    /* 📱 Responsive Adjustments */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      .top-content {
+        padding: 1.5rem 1rem;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .top-content h2 {
+        margin-left: 0;
+        font-size: 1.5rem;
+      }
+    }
+
+
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-150px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+    }
+
+    .animate-left {
+      animation: slideInLeft 1s ease forwards;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+  <!-- Responsive Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-logo" href="./index.html">
+      <img src="https://raw.githubusercontent.com/kondamahesh1250/VSoftSolutions/refs/heads/main/images/logo.webp" alt="Logo">
+    </a>
+
+    <!-- Toggle Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLinks" aria-controls="navbarLinks" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Content -->
+    <div class="collapse navbar-collapse" id="navbarLinks">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a href="./index.html" class="nav-link home"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="./aboutus.html" class="nav-link about"><i class="fas fa-info-circle"></i> About Us</a>
+        </li>
+        <li class="nav-item dropdown">
+             <a class="nav-link  btech dropbtn" href="./BtechProjects.html">
+            <i class="fas fa-graduation-cap"></i> B.Tech Projects
+          </a>
+
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link  mtech dropbtn" href="MtechProjects.html" >
+            <i class="fas fa-laptop-code"></i> M.Tech Projects
+          </a>
+          
+        </li>
+        <li class="nav-item">
+          <a href="./MBA-Projects.html" class="nav-link mba"><i class="fas fa-briefcase"></i> MBA Projects</a>
+        </li>
+        <li class="nav-item">
+          <a href="./MCA.html" class="nav-link mca"><i class="fas fa-desktop"></i> MCA Projects</a>
+        </li>
+        <li class="nav-item">
+          <a href="./Intership.html" class="nav-link internship"><i class="fas fa-building"></i> Internships&Corporate</a>
+        </li>
+        <li class="nav-item">
+          <a href="./index.html" class="nav-link register-btn"><i class="fas fa-user-plus"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+  <div class="top-content animate-left">
+    <h2 class="section-title" id="title"></h2>
+  </div>
+
+  <!-- <div id="title" class="animate-left"></div> -->
+  <div id="result" class="animate-left"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const degree = params.get('degree');
+    const branch = params.get('branch');
+    const type = params.get('type');
+    const domain = params.get('domain');
+
+    document.getElementById('title').textContent = `${degree} ${branch} ${type} - ${domain} Projects`;
+ 
+    async function getProjects() {
+      let response = await fetch(`https://vsoft.onrender.com/api/projects/${degree}/${branch}/${type}/${domain}`);
+      let data = await response.json();
+
+      
+
+      let table = document.createElement("table");
+      let row = document.createElement("tr");
+      let th1 = document.createElement("th");
+      let th2 = document.createElement("th");
+      th1.textContent = "TITLE";
+      th2.textContent = "DESCRIPTION";
+      th1.style.fontSize = "20px"
+      th2.style.fontSize = "20px"
+      row.append(th1,th2);
+      table.appendChild(row);
+
+      data.forEach(res => {
+        let row = document.createElement("tr");
+
+        ["title","description"].forEach(key => {
+          let td = document.createElement("td");
+          td.textContent = res[key] + " " + res[key];
+          row.appendChild(td);
+        });
+
+        table.appendChild(row);
+      });
+
+      document.getElementById("result").appendChild(table);
+    }
+
+    getProjects();
+  </script>
+
+  <script src="./index.js"></script>
+</body>
+
+</html>
